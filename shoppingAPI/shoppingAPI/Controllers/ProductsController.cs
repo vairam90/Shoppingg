@@ -16,7 +16,7 @@ namespace shoppingAPI.Controllers
 			return Ok(pObj.GetAllProducts());
 		}		
 		[HttpGet]
-		[Route("/plist/name/{name}")]
+		[Route("/plist/{name}")]
 		public IActionResult GetProductsByName(string name)
 		{
 			try
@@ -30,7 +30,7 @@ namespace shoppingAPI.Controllers
 			}
 		}
 		[HttpGet]
-		[Route("/plist/category/{category}")]
+		[Route("/plist/{category}")]
 		public IActionResult GetProductsByCategory(string category)
 		{
 			try
@@ -44,17 +44,17 @@ namespace shoppingAPI.Controllers
 			}
 		}
 		[HttpGet]
-		[Route("/plist/inStock/{state}")]
+		[Route("/plist/{state}")]
 		public IActionResult GetinStockProducts(bool state)
 		{
 			return Ok(pObj.GetinStockProducts(state));
 		}
-		[HttpGet]
-		[Route("/plist/total")]
-		public IActionResult GetTotalProducts()
-		{
-			return Ok(pObj.GetTotalProducts());
-		}
+		//[HttpGet]
+		//[Route("/plist/total")]
+		//public IActionResult GetTotalProducts()
+		//{
+		//	return Ok(pObj.GetTotalProducts());
+		//}
 
 
 
@@ -94,5 +94,23 @@ namespace shoppingAPI.Controllers
 
 			}
 		}
+		[ApiController]
+		public class CartContoller : ControllerBase
+		{
+			
+
+			[HttpPost]
+			[Route("plist/add/tocart/{pId}")]
+		public IActionResult AddToCart(int id)
+		{
+			return Ok(pObj.GetProductsCartByName(id))
+		}
+		}
+	[HttpGet]
+	[Route("plist/cart")]
+	public IActionResult GetCartItems()
+	{
+		return Ok(cart);
+	}
 	}
 }

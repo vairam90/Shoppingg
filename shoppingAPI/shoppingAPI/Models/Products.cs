@@ -14,6 +14,7 @@
 		public string pDescription { get; set; }
 
 		public bool pIsInStock { get; set; }
+		
 
 		#endregion
 		#region Data
@@ -50,11 +51,11 @@
 		public Products GetProductsByName(string name)
 		{
 			var prd = pList.Find(p => p.pName == name);
-			if (prd != null)
+			if (prd == null)
 			{
-				return prd;
+				throw new Exception("pIsInStock Not Found");
 			}
-			throw new Exception("pIsInStock Not Found");
+			return prd;
 		}
 		
 		public Products GetProductsByCategory(string category)
@@ -62,20 +63,20 @@
 			var prd = pList.Find(p => p.pCategory == category);
 			if (prd != null)
 			{
-				return prd;
+				throw new Exception("pIsInStock Not Found");
 			}
-			throw new Exception("pIsInStock Not Found");
+			return prd;
 		}
 		public List<Products> GetinStockProducts(bool state)
 		{
 			var prd = pList.FindAll(p => p.pIsInStock == state);
 			return prd;
 		}
-		public int GetTotalProducts()
-		{
-			var total = pList.Count;
-			return total;
-		}
+		//public int GetTotalProducts()
+		//{
+		//	var total = pList.Count;
+		//	return total;
+		//}
 		#endregion
 
 		#region Add, update and delete
@@ -113,6 +114,16 @@
 
 		}
 		#endregion
+		private static List<Products> cart = new List<Products>();
+		public List<Products> GetProductsCartByName(int id)
+		{
+			var prd = pList.Find(pObj => pObj.pId == id);
+			if (prd == null)
+				throw new Exception("Product Not Found");
+			cart.Add(prd);
+			return cart;
+		}
+
 		#endregion
 	}
 }
